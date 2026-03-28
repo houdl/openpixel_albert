@@ -353,13 +353,6 @@
       logPixelEvent('pageload', 'Page loaded automatically');
     })();
 
-    // ---- Fire Pixel Event ----
-    function firePixelEvent(eventName, eventData) {
-      if (typeof fmpix === 'undefined') { alert('FeedMob Pixel not loaded yet.'); return; }
-      if (eventData) { fmpix('event', eventName, eventData); logPixelEvent(eventName, eventData); }
-      else { fmpix('event', eventName); logPixelEvent(eventName, ''); }
-    }
-
     // ---- Modal ----
     var modal = document.getElementById('signup-modal');
     var formState = document.getElementById('form-state');
@@ -385,7 +378,9 @@
       var userName = document.getElementById('signup-name').value;
       var userEmail = document.getElementById('signup-email').value;
       // KEY: Fire FeedMob registration event directly (no GTM)
-      firePixelEvent('REG', JSON.stringify({ name: userName, email: userEmail }));
+      var eventData = JSON.stringify({ name: userName, email: userEmail });
+      fmpix('event', 'REG');
+      logPixelEvent('REG', eventData);
       formState.style.display = 'none';
       successState.style.display = 'block';
       setTimeout(closeSignupModal, 2000);
