@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Albert | Your personal financial assistant</title>
+
+  <!-- ============================================== -->
+  <!-- FeedMob Pixel - Direct Integration (No GTM)    -->
+  <!-- Step 1: Load the pixel snippet in <head>       -->
+  <!-- ============================================== -->
+  <script>
+  !function(e,t,n,s,a,p,c){e[s]||((a=e[s]=function(){a.process?a.process.apply(a,arguments):a.queue.push(arguments)}).queue=[],a.t=+new Date,(p=t.createElement(n)).async=1,p.src="https://feedmob-cdn.s3.amazonaws.com/js/fmpixel.js?t="+864e5*Math.ceil(new Date/864e5),(c=t.getElementsByTagName(n)[0]).parentNode.insertBefore(p,c))}(window,document,"script","fmpix"),fmpix("init","d7ab0ac71e9245f48c8d92d59140bfb6"),fmpix("event","pageload");
+  </script>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #111; background: #fff; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+    button { font-family: inherit; }
+
+    /* ========== NAV ========== */
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 40; display: flex; align-items: center; justify-content: space-between; padding: 28px 48px 29px; transition: all 0.3s; }
+    .nav.scrolled { background: #fff; box-shadow: 0 1px 0 #eee; padding-top: 16px; padding-bottom: 16px; }
+    .nav-logo img { height: 26px; width: auto; }
+    .nav-center { display: flex; align-items: center; gap: 0; }
+    .nav-center a, .nav-center button { font-size: 16px; font-weight: 500; color: #333; padding: 6px 14px; border-radius: 999px; border: none; background: transparent; cursor: pointer; transition: background 0.2s; white-space: nowrap; }
+    .nav-center a:hover, .nav-center button:hover { background: #f5f5f5; }
+    .nav-center .dropdown-arrow { font-size: 10px; margin-left: 2px; }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .nav-login { font-size: 16px; font-weight: 500; color: #333; padding: 6px 14px; border-radius: 999px; transition: background 0.2s; }
+    .nav-login:hover { background: #f5f5f5; }
+    .btn-signup-nav { background: #2563eb; color: #fff; padding: 8px 24px; border-radius: 999px; font-weight: 600; font-size: 14px; cursor: pointer; border: none; transition: background 0.2s; }
+    .btn-signup-nav:hover { background: #1d4ed8; }
+
+    /* ========== HERO ========== */
+    .hero { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; overflow: hidden; background: #f0eeea; padding-top: 80px; }
+    .hero-bg { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 1400px; max-width: 100vw; pointer-events: none; }
+    .hero-gradient { width: 100%; display: block; }
+    .hero-objects { position: absolute; left: 50%; transform: translateX(-50%); width: 1400px; max-width: 100vw; top: 0; animation: slowSpin 120s linear infinite; }
+    .hero-objects img { width: 100%; display: block; }
+    @keyframes slowSpin { from { transform: translateX(-50%) rotate(0deg); } to { transform: translateX(-50%) rotate(360deg); } }
+
+    .hero-content { position: relative; z-index: 2; text-align: center; display: flex; flex-direction: column; align-items: center; padding-top: 380px; padding-bottom: 200px; }
+    .hero-content h1 { font-size: 48px; font-weight: 500; line-height: 1.1; color: #111; margin-bottom: 16px; letter-spacing: -0.5px; max-width: 630px; }
+    .hero-content h1 .genius { color: #2563eb; }
+    .hero-content h2 { font-size: 20px; font-weight: 400; color: #666; line-height: 1.5; max-width: 520px; }
+    .hero-btn-group { margin-top: 24px; padding: 16px 0 32px; }
+    .btn-hero { display: inline-block; background: #2563eb; color: #fff; padding: 14px 40px; border-radius: 999px; font-size: 16px; font-weight: 600; cursor: pointer; border: none; transition: all 0.2s; }
+    .btn-hero:hover { background: #1d4ed8; }
+
+    /* ========== SECTION COMMON ========== */
+    .section { padding: 80px 24px; }
+    .section-inner { max-width: 1000px; margin: 0 auto; text-align: center; }
+    .section-inner h2 { font-size: 36px; font-weight: 500; margin-bottom: 16px; letter-spacing: -0.3px; }
+    .section-inner .section-desc { color: #666; font-size: 18px; margin-bottom: 48px; line-height: 1.6; }
+
+    /* ========== BUDGETING ========== */
+    .pill-tabs { display: flex; justify-content: center; gap: 8px; margin-bottom: 48px; flex-wrap: wrap; }
+    .pill-tab { display: flex; align-items: center; gap: 6px; padding: 10px 20px; border-radius: 999px; background: #f5f5f0; font-size: 14px; font-weight: 600; color: #555; cursor: pointer; border: none; transition: all 0.2s; }
+    .pill-tab.active { background: #111; color: #fff; }
+    .pill-tab:hover:not(.active) { background: #e8e8e3; }
+
+    .feature-detail { display: flex; align-items: center; gap: 56px; text-align: left; }
+    .feature-detail-text { flex: 1; }
+    .feature-detail-text h3 { font-size: 28px; font-weight: 500; margin-bottom: 14px; }
+    .feature-detail-text p { font-size: 16px; color: #666; line-height: 1.7; margin-bottom: 20px; }
+    .btn-learn { color: #2563eb; font-weight: 600; font-size: 15px; display: inline-flex; align-items: center; gap: 4px; background: none; border: none; cursor: pointer; }
+    .btn-learn:hover { text-decoration: underline; }
+    .feature-detail-visual { flex: 0 0 280px; display: flex; justify-content: center; }
+    .phone-frame { background: #111; border-radius: 32px; padding: 10px; width: 260px; box-shadow: 0 20px 60px rgba(0,0,0,0.12); }
+    .phone-screen { background: #fff; border-radius: 24px; padding: 24px 20px; min-height: 340px; display: flex; flex-direction: column; }
+    .phone-screen .ps-header { font-size: 12px; color: #999; margin-bottom: 4px; }
+    .phone-screen .ps-amount { font-size: 30px; font-weight: 700; color: #111; }
+    .phone-screen .ps-change { font-size: 13px; color: #16a34a; margin-top: 4px; margin-bottom: 20px; }
+    .phone-screen .ps-bar-group { display: flex; flex-direction: column; gap: 12px; }
+    .ps-bar-label { font-size: 11px; color: #999; margin-bottom: 4px; }
+    .ps-bar-track { height: 8px; background: #f0f0f0; border-radius: 4px; overflow: hidden; }
+    .ps-bar-fill { height: 100%; border-radius: 4px; }
+    .ps-bar-fill.blue { background: linear-gradient(90deg, #60a5fa, #2563eb); }
+    .ps-bar-fill.purple { background: linear-gradient(90deg, #a78bfa, #7c3aed); }
+    .ps-bar-fill.green { background: linear-gradient(90deg, #4ade80, #16a34a); }
+    .ps-bar-fill.orange { background: linear-gradient(90deg, #fbbf24, #f59e0b); }
+
+    /* ========== GENIUS ========== */
+    .genius-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 960px; margin: 0 auto; }
+    .genius-card { background: #fff; border-radius: 20px; padding: 28px; text-align: left; border: 1px solid #eee; transition: all 0.2s; }
+    .genius-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.06); border-color: transparent; }
+    .genius-card .gc-icon { width: 40px; height: 40px; background: #eff6ff; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; font-size: 20px; }
+    .genius-card h4 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+    .genius-card p { font-size: 14px; color: #888; line-height: 1.6; }
+
+    /* ========== STATS ========== */
+    .stats-row { display: flex; justify-content: center; gap: 72px; }
+    .stat-item .stat-number { font-size: 44px; font-weight: 700; color: #111; }
+    .stat-item .stat-label { font-size: 14px; color: #999; margin-top: 4px; }
+
+    /* ========== CTA ========== */
+    .cta { background: #f8f7f2; text-align: center; padding: 80px 24px; }
+    .cta h2 { font-size: 36px; font-weight: 500; margin-bottom: 24px; }
+
+    /* ========== FOOTER ========== */
+    .footer { background: #111; padding: 32px 48px; font-size: 13px; color: #888; }
+    .footer-inner { max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+    .footer-logo img { height: 20px; filter: brightness(10); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { color: #888; transition: color 0.2s; }
+    .footer-links a:hover { color: #fff; }
+
+    /* ========== SIGNUP MODAL ========== */
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.35); z-index: 200; justify-content: center; align-items: center; backdrop-filter: blur(4px); }
+    .modal-overlay.active { display: flex; }
+    .modal { background: #fff; border-radius: 24px; padding: 40px; width: 400px; max-width: 90vw; box-shadow: 0 24px 64px rgba(0,0,0,0.15); position: relative; }
+    .modal-close { position: absolute; top: 16px; right: 20px; font-size: 24px; cursor: pointer; color: #bbb; background: none; border: none; line-height: 1; }
+    .modal-close:hover { color: #333; }
+    .modal .modal-logo img { height: 22px; margin-bottom: 24px; }
+    .modal h2 { font-size: 26px; font-weight: 500; margin-bottom: 6px; color: #111; }
+    .modal .subtitle { color: #999; margin-bottom: 28px; font-size: 14px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: #333; }
+    .form-group input { width: 100%; padding: 12px 14px; border: 1.5px solid #e5e7eb; border-radius: 12px; font-size: 15px; outline: none; transition: border-color 0.2s; font-family: inherit; }
+    .form-group input:focus { border-color: #2563eb; }
+    .btn-submit { width: 100%; padding: 14px; background: #2563eb; color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 4px; transition: background 0.2s; }
+    .btn-submit:hover { background: #1d4ed8; }
+
+    .success-state { display: none; text-align: center; padding: 24px 0; }
+    .success-state .checkmark { font-size: 52px; margin-bottom: 12px; }
+    .success-state h3 { font-size: 24px; font-weight: 500; color: #2563eb; margin-bottom: 8px; }
+    .success-state p { color: #999; font-size: 14px; }
+
+    /* ========== DEBUG PANEL ========== */
+    .debug-panel { position: fixed; bottom: 0; left: 0; right: 0; background: #1a1a2e; color: #d4d4d4; z-index: 300; font-family: 'SF Mono', Menlo, monospace; font-size: 12px; transition: transform 0.3s; }
+    .debug-panel.collapsed { transform: translateY(calc(100% - 32px)); }
+    .debug-header { display: flex; align-items: center; justify-content: space-between; padding: 6px 16px; background: #252540; cursor: pointer; user-select: none; }
+    .debug-header span { color: #60a5fa; font-weight: 700; font-family: sans-serif; font-size: 12px; }
+    .debug-toggle { background: none; border: none; color: #666; cursor: pointer; font-size: 12px; }
+    .debug-content { max-height: 160px; overflow-y: auto; padding: 6px 16px; }
+    .debug-entry { padding: 3px 0; border-bottom: 1px solid #2a2a3a; font-size: 11px; }
+    .debug-entry .time { color: #69b1ff; }
+    .debug-entry .event-type { color: #4ade80; font-weight: 700; }
+    .debug-entry .event-detail { color: #fbbf24; }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 768px) {
+      .nav { padding: 12px 20px; }
+      .nav-center { display: none; }
+      .hero-content { padding-top: 100px; padding-bottom: 160px; }
+      .hero-content h1 { font-size: 34px; }
+      .hero-content h2 { font-size: 17px; }
+      .section { padding: 48px 20px; }
+      .feature-detail { flex-direction: column; gap: 32px; }
+      .feature-detail-visual { flex: none; order: -1; }
+      .genius-grid { grid-template-columns: 1fr; }
+      .stats-row { flex-direction: column; gap: 20px; }
+      .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== NAV ========== -->
+  <nav class="nav" id="main-nav">
+    <a href="#" class="nav-logo"><img src="albert-logo.svg" alt="Albert" width="140" height="40"></a>
+    <div class="nav-center">
+      <button>Features <span class="dropdown-arrow">&#9662;</span></button>
+      <a href="#budget">Budgeting</a>
+      <a href="#genius">Genius</a>
+      <a href="#">Help</a>
+    </div>
+    <div class="nav-right">
+      <a href="#" class="nav-login">Log in</a>
+      <button class="btn-signup-nav" id="nav-signup">Sign up</button>
+    </div>
+  </nav>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero">
+    <!-- Background images -->
+    <div class="hero-bg">
+      <img src="hero-gradient.png" alt="" class="hero-gradient">
+    </div>
+    <div class="hero-objects">
+      <img src="hero.png" alt="">
+    </div>
+
+    <!-- Center text -->
+    <div class="hero-content">
+      <h1>Introducing <span class="genius">Genius</span>.<br>Your personal financial assistant.</h1>
+      <h2>Budget, save, invest, and shop smarter with a financial assistant who gets money and things done.</h2>
+      <div class="hero-btn-group">
+        <button class="btn-hero" id="hero-signup">Get started</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== BUDGETING ========== -->
+  <section class="section" id="budget">
+    <div class="section-inner">
+      <h2>Albert sees your full financial picture.</h2>
+      <div class="pill-tabs">
+        <button class="pill-tab active">&#x1F4CA; Budget</button>
+        <button class="pill-tab">&#x1F3E6; Accounts</button>
+        <button class="pill-tab">&#x1F4B0; Save</button>
+        <button class="pill-tab">&#x1F4C8; Invest</button>
+        <button class="pill-tab">&#x1F6E1; Protect</button>
+      </div>
+      <div class="feature-detail">
+        <div class="feature-detail-text">
+          <h3>Know where your money's going.</h3>
+          <p>Monitor your spending and cash flow, track your bills, and find savings. Smart categorization automatically organizes your transactions.</p>
+          <button class="btn-learn">Learn more &rarr;</button>
+        </div>
+        <div class="feature-detail-visual">
+          <div class="phone-frame">
+            <div class="phone-screen">
+              <div class="ps-header">Monthly Spending</div>
+              <div class="ps-amount">$3,247</div>
+              <div class="ps-change">&#x25B2; 12% from last month</div>
+              <div class="ps-bar-group">
+                <div><div class="ps-bar-label">Food & Dining</div><div class="ps-bar-track"><div class="ps-bar-fill blue" style="width:72%"></div></div></div>
+                <div><div class="ps-bar-label">Shopping</div><div class="ps-bar-track"><div class="ps-bar-fill purple" style="width:55%"></div></div></div>
+                <div><div class="ps-bar-label">Transport</div><div class="ps-bar-track"><div class="ps-bar-fill green" style="width:38%"></div></div></div>
+                <div><div class="ps-bar-label">Entertainment</div><div class="ps-bar-track"><div class="ps-bar-fill orange" style="width:25%"></div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== GENIUS ========== -->
+  <section class="section" id="genius" style="background:#f8f7f2;">
+    <div class="section-inner">
+      <h2>Unlock the full power of Albert with Genius.</h2>
+      <p class="section-desc">Your AI-powered financial planner that knows you and gets things done.</p>
+    </div>
+    <div class="genius-grid">
+      <div class="genius-card"><div class="gc-icon">&#x1F4CA;</div><h4>Financial plan</h4><p>Build budgets, track spending, and get insight into your financial innerworkings.</p></div>
+      <div class="genius-card"><div class="gc-icon">&#x1F6CD;</div><h4>Shopping</h4><p>Find products and deals. Genius helps you choose options that fit your budget.</p></div>
+      <div class="genius-card"><div class="gc-icon">&#x1F6DE;</div><h4>Assistant</h4><p>Meet Genius, the first AI financial assistant that knows you and gets things done.</p></div>
+      <div class="genius-card"><div class="gc-icon">&#x1F5FA;</div><h4>Experiences</h4><p>Create full travel itineraries. Find places to stay, things to do, and how to get there.</p></div>
+      <div class="genius-card"><div class="gc-icon">&#x1F514;</div><h4>Alerts</h4><p>Get notified when you hit financial goals, spending limits, and so much more.</p></div>
+      <div class="genius-card"><div class="gc-icon">&#x1F5C4;</div><h4>Vault</h4><p>Securely store important documents. Break down insurance policies and financial data.</p></div>
+    </div>
+  </section>
+
+  <!-- ========== STATS ========== -->
+  <section class="section">
+    <div class="section-inner">
+      <h2>Over 20 million customers trust Albert.</h2>
+      <div class="stats-row">
+        <div class="stat-item"><div class="stat-number">200K+</div><div class="stat-label">5-star app reviews</div></div>
+        <div class="stat-item"><div class="stat-number">$2B+</div><div class="stat-label">Saved and invested</div></div>
+        <div class="stat-item"><div class="stat-number">$13B+</div><div class="stat-label">Budgeted & tracked</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CTA ========== -->
+  <section class="cta">
+    <h2>Sign up in minutes and see what Albert can do for you.</h2>
+    <button class="btn-hero" id="cta-signup">Get started</button>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-logo"><img src="albert-logo.svg" alt="Albert"></div>
+      <div class="footer-links">
+        <a href="#">About</a><a href="#">Careers</a><a href="#">Help</a><a href="#">Terms</a><a href="#">Privacy</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========== SIGNUP MODAL ========== -->
+  <div class="modal-overlay" id="signup-modal">
+    <div class="modal">
+      <button class="modal-close" id="modal-close">&times;</button>
+      <div id="form-state">
+        <div class="modal-logo"><img src="albert-logo.svg" alt="Albert"></div>
+        <h2>Create your account</h2>
+        <p class="subtitle">Join 20 million+ people using Albert today.</p>
+        <form id="signup-form">
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="signup-name" placeholder="Enter your full name" required>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="signup-email" placeholder="Enter your email" required>
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="signup-password" placeholder="Create a password" required>
+          </div>
+          <button type="submit" class="btn-submit">Sign up</button>
+        </form>
+      </div>
+      <div id="success-state" class="success-state">
+        <div class="checkmark">&#x2705;</div>
+        <h3>Welcome to Albert!</h3>
+        <p>Your account has been created successfully.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- FeedMob Pixel - Direct Integration (No GTM)    -->
+  <!-- Step 2: Fire custom events with JavaScript     -->
+  <!-- ============================================== -->
+  <script>
+    // ---- Sticky nav on scroll ----
+    window.addEventListener('scroll', function() {
+      var nav = document.getElementById('main-nav');
+      if (window.scrollY > 60) { nav.classList.add('scrolled'); }
+      else { nav.classList.remove('scrolled'); }
+    });
+
+    // ---- Debug Panel ----
+    (function() {
+      var debugPanel = document.createElement('div');
+      debugPanel.className = 'debug-panel collapsed';
+      debugPanel.innerHTML =
+        '<div class="debug-header">' +
+          '<span>FeedMob Pixel Event Monitor</span>' +
+          '<button class="debug-toggle">&#x25B2;</button>' +
+        '</div>' +
+        '<div class="debug-content" id="debug-content"></div>';
+      document.body.appendChild(debugPanel);
+
+      document.querySelector('.debug-header').addEventListener('click', function() {
+        debugPanel.classList.toggle('collapsed');
+      });
+
+      window.logPixelEvent = function(type, detail) {
+        var content = document.getElementById('debug-content');
+        var entry = document.createElement('div');
+        entry.className = 'debug-entry';
+        var time = new Date().toLocaleTimeString();
+        entry.innerHTML = '<span class="time">[' + time + ']</span> ' +
+          '<span class="event-type">' + type + '</span> ' +
+          (detail ? '<span class="event-detail">' + detail + '</span>' : '');
+        content.insertBefore(entry, content.firstChild);
+      };
+
+      var originalFmpix = window.fmpix;
+      if (originalFmpix) {
+        (originalFmpix.queue || []).forEach(function(args) {
+          logPixelEvent('QUEUED: ' + args[0], args[1] || '');
+        });
+      }
+      logPixelEvent('pageload', 'Page loaded automatically');
+    })();
+
+    // ---- Fire Pixel Event ----
+    function firePixelEvent(eventName, eventData) {
+      if (typeof fmpix === 'undefined') { alert('FeedMob Pixel not loaded yet.'); return; }
+      if (eventData) { fmpix('event', eventName, eventData); logPixelEvent(eventName, eventData); }
+      else { fmpix('event', eventName); logPixelEvent(eventName, ''); }
+    }
+
+    // ---- Modal ----
+    var modal = document.getElementById('signup-modal');
+    var formState = document.getElementById('form-state');
+    var successState = document.getElementById('success-state');
+
+    function openSignupModal() {
+      modal.classList.add('active');
+      formState.style.display = 'block';
+      successState.style.display = 'none';
+      logPixelEvent('MODAL OPEN', 'Signup modal opened');
+    }
+    function closeSignupModal() { modal.classList.remove('active'); }
+
+    document.getElementById('nav-signup').addEventListener('click', openSignupModal);
+    document.getElementById('hero-signup').addEventListener('click', openSignupModal);
+    document.getElementById('cta-signup').addEventListener('click', openSignupModal);
+    document.getElementById('modal-close').addEventListener('click', closeSignupModal);
+    modal.addEventListener('click', function(e) { if (e.target === modal) closeSignupModal(); });
+
+    // ---- Form Submit = Fire REG event ----
+    document.getElementById('signup-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var userName = document.getElementById('signup-name').value;
+      var userEmail = document.getElementById('signup-email').value;
+      // KEY: Fire FeedMob registration event directly (no GTM)
+      firePixelEvent('REG', JSON.stringify({ name: userName, email: userEmail }));
+      formState.style.display = 'none';
+      successState.style.display = 'block';
+      setTimeout(closeSignupModal, 2000);
+    });
+
+    // ---- Tab switching ----
+    var tabs = document.querySelectorAll('.pill-tab');
+    tabs.forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        tabs.forEach(function(t) { t.classList.remove('active'); });
+        tab.classList.add('active');
+      });
+    });
+
+    logPixelEvent('INFO', 'Direct pixel integration (no GTM)');
+  </script>
+</body>
+</html>

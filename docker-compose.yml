@@ -1,0 +1,7 @@
+services:
+  albert-demo:
+    build: .
+    container_name: albert-pixel-demo
+    ports:
+      - "3080:80"
+    restart: unless-stopped
