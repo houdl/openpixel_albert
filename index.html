@@ -10,7 +10,7 @@
   <!-- Step 1: Load the pixel snippet in <head>       -->
   <!-- ============================================== -->
   <script>
-  !function(e,t,n,s,a,p,c){e[s]||((a=e[s]=function(){a.process?a.process.apply(a,arguments):a.queue.push(arguments)}).queue=[],a.t=+new Date,(p=t.createElement(n)).async=1,p.src="https://feedmob-cdn.s3.amazonaws.com/js/fmpixel.js?t="+864e5*Math.ceil(new Date/864e5),(c=t.getElementsByTagName(n)[0]).parentNode.insertBefore(p,c))}(window,document,"script","fmpix"),fmpix("init","d7ab0ac71e9245f48c8d92d59140bfb6"),fmpix("event","pageload");
+  !function(e,t,n,s,a,p,c){e[s]||((a=e[s]=function(){a.process?a.process.apply(a,arguments):a.queue.push(arguments)}).queue=[],a.t=+new Date,(p=t.createElement(n)).async=1,p.src="https://feedmob-cdn.s3.amazonaws.com/js/fmpixel.js?t="+864e5*Math.ceil(new Date/864e5),(c=t.getElementsByTagName(n)[0]).parentNode.insertBefore(p,c))}(window,document,"script","fmpix"),fmpix("init","7cb7e4e847be471ebb43910908cdf72d"),fmpix("event","pageload");
   </script>
 
   <style>
@@ -379,8 +379,8 @@
       var userEmail = document.getElementById('signup-email').value;
       // KEY: Fire FeedMob registration event directly (no GTM)
       var eventData = JSON.stringify({ name: userName, email: userEmail });
-      fmpix('event', 'REG');
-      logPixelEvent('REG', eventData);
+      fmpix('event', 'REG', { original_event_name: 'SignedUp', user_id: 'test_1' });
+      logPixelEvent('REG', eventData + ' params: { original_event_name: SignedUp, user_id: test_1 }');
       formState.style.display = 'none';
       successState.style.display = 'block';
       setTimeout(closeSignupModal, 2000);
